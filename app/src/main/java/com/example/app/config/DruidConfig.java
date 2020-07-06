@@ -14,7 +14,11 @@ import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ @Description
+ @author ${USER}
+ @date  ${TIME}
+*/
 @Configuration
 public class DruidConfig {
 
@@ -29,22 +33,38 @@ public class DruidConfig {
                  return new DruidDataSource();
          }
 
-
+    /** show 方法的简述.
+    * <p>show  连接 druid 后台管理的bean<br>
+    * @param
+    * @return org.springframework.boot.web.servlet.ServletRegistrationBean
+    * @Author Administrator
+     * @Date 2020/6/24
+     */
     @Bean
     public ServletRegistrationBean druidServlet() {
         ServletRegistrationBean servletRegistrationBean = new
                 ServletRegistrationBean();
         servletRegistrationBean.setServlet(new StatViewServlet());
         servletRegistrationBean.addUrlMappings("/druid/*");
-        Map<String, String> initParameters = new HashMap<>();
-        initParameters.put("loginUsername", userName);// ⽤户名
-        initParameters.put("loginPassword", password);// 密码
-        initParameters.put("resetEnable", "false");// 禁⽤HTML⻚⾯上   的“Reset All”功能
+        Map<String, String> initParameters = new HashMap<>(4);
+        //户名
+        initParameters.put("loginUsername", userName);
+        //密码
+        initParameters.put("loginPassword", password);
+        //禁⽤HTML⻚⾯上   的“Reset All”功能
+        initParameters.put("resetEnable", "false");
 
         servletRegistrationBean.setInitParameters(initParameters);
         return servletRegistrationBean;
     }
 
+    /** show 方法的简述.
+    * <p>show druid 进行全局路径拦截<br>
+    * @param
+    * @return org.springframework.boot.web.servlet.FilterRegistrationBean
+    * @Author Administrator
+     * @Date 2020/6/24
+     */
     @Bean
     public FilterRegistrationBean filterRegistrationBean() {
         FilterRegistrationBean filterRegistrationBean = new
